@@ -1,1 +1,16 @@
 
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    com.netflix.eureka: INFO
+    org.springframework.cloud: INFO
