@@ -7,3 +7,58 @@ eureka:
       defaultZone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+
+spring:
+  security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:7080/realms/mediconnect
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      gatewayDefault:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 2
+        waitDurationInOpenState: 10s
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      authGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      patientGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      doctorGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      appointmentGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+  timelimiter:
+    configs:
+      gatewayDefault:
+        timeoutDuration: 5s
+        cancelRunningFuture: true
+    instances:
+      authGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      patientGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      doctorGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
+      appointmentGatewayCircuitBreaker:
+        baseConfig: gatewayDefault
