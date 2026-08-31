@@ -10,23 +10,21 @@ eureka:
 
 spring:
   security:
-      oauth2:
-        resourceserver:
-          jwt:
-            issuer-uri: http://localhost:7080/realms/mediconnect
-    rabbitmq:
-      host: localhost
-      port: 5672
-      username: guest
-      password: guest
-
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:7080/realms/mediconnect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,circuitbreakers,circuitbreakerevents
-
 
 resilience4j:
   circuitbreaker:
